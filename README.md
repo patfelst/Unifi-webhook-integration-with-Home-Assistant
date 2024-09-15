@@ -1,4 +1,4 @@
-# UniFi Webhook Integration with Home Assistant
+# UniFi Protect Integration with Home Assistant using Webhooks
 This page describes how to use UniFi Protect motion detection events, or alarms, to trigger automations in Home Assistant.
 
 Written by Patrick Felstead, September 2024, after extensive trial and error configuring UniFi Protect to turn on outside lights—controlled by my home automation system, Home Assistant—when the cameras detect people using "AI Smart Detections."
