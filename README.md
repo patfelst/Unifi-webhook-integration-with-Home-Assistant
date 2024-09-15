@@ -37,3 +37,7 @@ However, by adding crossing lines, the alarm (webhook) is triggered immediately 
 **Crossing Lines editor**
 <img width="1267" alt="image" src="https://github.com/user-attachments/assets/6fea967f-b1de-43b7-95ae-5aad381b738b">
 
+### Alarm Manager
+![image](https://github.com/user-attachments/assets/954fb21d-736e-49f5-86bc-dcb0572e79b3)
+
+
