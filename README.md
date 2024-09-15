@@ -94,6 +94,7 @@ Change the HA automation mode to `single` to prevent additional triggers if anot
 
 
 **Input Booleans as displayed on HA front end**
+`input_boolean` are actually created using the HA UI under the "Helpers" menu (i.e. you don't need to define them in yaml in your config.yaml file).
 
 <img width="495" alt="image" src="https://github.com/user-attachments/assets/a3e6c59d-0998-4fa6-9824-033deb3b3d12">
 
@@ -119,6 +120,12 @@ However, by adding crossing lines, the alarm (webhook) is triggered immediately 
 
 **Crossing Lines editor**
 <img width="1267" alt="image" src="https://github.com/user-attachments/assets/6fea967f-b1de-43b7-95ae-5aad381b738b">
+
+Alarm manager editor
+<img width="389" alt="image" src="https://github.com/user-attachments/assets/8191a6b3-f38a-4dd6-8e63-30be3f9eeb90">
+
+
+
 
 ### Alarm Manager
 ![image](https://github.com/user-attachments/assets/954fb21d-736e-49f5-86bc-dcb0572e79b3)
