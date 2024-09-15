@@ -9,12 +9,10 @@ In UniFi Protect's Alarm Manager, each motion event is configured to **send** (p
 Since I currently have five cameras, I've set up five alarms in Protect, where each alarm is for detection of a person. This triggers five separate webhook automations, which set five `input_boolean` helpers.
 
 ### Reasons to use `input_boolean` switches:
-- **Flexibility**: By using an `input_boolean`, you can decouple the webhook from the actual action, allowing multiple automations to be triggered based on the same event.
+- **Flexibility**: By using an `input_boolean`, you can decouple the webhook from the automations that do the real work, allowing multiple automations to be triggered based on the same event.
 - **State history**: Home Assistant stores the history of the `input_boolean` in a form that's easier to view than an automation's history.
-- **Conditional actions**: You can use the `input_boolean` in multiple automations to perform different actions based on the same event. For example, turning on lights only when it is dark outside or triggering other devices based on the motion event.
-- **Reusability**: Once the `input_boolean` is set up, it can be reused in various parts of your Home Assistant setup, saving time and effort for future automations.
 - **Timing control**: By turning on the `input_boolean` for a set duration (like 10 seconds), you can display the `input_boolean` on the front end and observe the toggle changing state when the webhook is received.
-- **Prevent multiple triggers**: It helps prevent multiple automations from being triggered in rapid succession from repeated motion events, as the `input_boolean` serves as a short-term gate.
+- **Prevent multiple triggers**: It helps prevent multiple automations from being triggered in rapid succession from repeated motion events, as the `input_boolean` serves as a short-term (10 second) gate.
 
 
 ## HA Automations
@@ -26,6 +24,58 @@ Home Assistant Automations are shown below (the icons under the name are just HA
 
 **Content of one HA automation**
 <img width="1268" alt="image" src="https://github.com/user-attachments/assets/d34a61dc-b503-4505-9d1e-9cf384283355">
+
+As you can see, after the automation is triggered ("When") by the webhook, there are no conditions ("And if"). The actions ("Then do") are to:
+- Turn ON the `input_boolean`
+- Wait 10 seconds
+- Turn OFF the `input_boolean`
+
+While developing the automation, you can test it by sending your phone a notification. I've disabled that action, but left it in the automation in case I need to check something later on.
+
+Here's what I sent to my phone, this displays the `triggers : key` part of webhook payload json data (see below for an example)
+```yaml
+action: notify.mobile_app_patricks_iphone_13
+metadata: {}
+data:
+  title: Unifi CCTV Camera
+  message: >
+    Back Yard: {% set triggers = trigger.json.alarm.triggers %}
+    {% for trigger in triggers -%}
+      {{ trigger.key }}
+    {% endfor %}
+enabled: true
+```
+So on your phone you'll see a notification with title `Unifi CCTV Camera` and content `Back Yard: person`.
+
+If you'd rather just display the complete json text (as shown below), you'd write the notification as:
+```yaml
+action: notify.mobile_app_patricks_iphone_13
+metadata: {}
+data:
+  title: Unifi CCTV Camera
+  message: >
+    Back Yard: {{ trigger.json }}
+enabled: true
+```
+
+An example of the webhook json data content received by HA from Unifi Protect when a person is detected. For a line crossing, `person` will be replaced with `line_crossing`
+```json
+{
+  "alarm": {
+    "name": "Pool Alfresco Person",
+    "sources": [{ "device": "F4E2C60E6104", "type": "include" }],
+    "conditions": [
+      { "condition": { "type": "is", "source": "person" } },
+      { "condition": { "type": "is", "source": "animal" } }
+    ],
+    "triggers": [
+      { "key": "person", "device": "F4E2C60E6104" },
+      { "key": "person", "device": "F4E2C60E6104" }
+    ]
+  },
+  "timestamp": 1725883107267
+}
+```
 
 **Details of the webhook trigger**
 
@@ -47,6 +97,7 @@ Change the HA automation mode to `single` to prevent additional triggers if anot
 
 <img width="495" alt="image" src="https://github.com/user-attachments/assets/a3e6c59d-0998-4fa6-9824-033deb3b3d12">
 
+Like I said previously, you can then use the `input_boolean` to trigger your actual HA automations that do something useful. You can write as many automations as you want to be triggered by each `input_boolean`.
 
 ## Unifi Protect Settings
 ### Cameras
