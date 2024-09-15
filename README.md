@@ -94,6 +94,7 @@ Change the HA automation mode to `single` to prevent additional triggers if anot
 
 
 **Input Booleans as displayed on HA front end**
+
 `input_boolean` are actually created using the HA UI under the "Helpers" menu (i.e. you don't need to define them in yaml in your config.yaml file).
 
 <img width="495" alt="image" src="https://github.com/user-attachments/assets/a3e6c59d-0998-4fa6-9824-033deb3b3d12">
@@ -132,3 +133,4 @@ Alarm manager editor
 
 <img width="389" alt="image" src="https://github.com/user-attachments/assets/8191a6b3-f38a-4dd6-8e63-30be3f9eeb90">
 
+![image](https://github.com/user-attachments/assets/14efe878-1b02-47e4-9fe5-c17ce106599c)
