@@ -6,6 +6,8 @@ Written by Patrick Felstead, September 2024, after extensive trial and error con
 ## Overview
 In UniFi Protect's Alarm Manager, each motion event is configured to **send** (push) a webhook to Home Assistant (HA). Home Assistant passively listens for the incoming webhook and triggers an automation when it receives it. Since a webhook can trigger only one automation, I use the automation to turn on an `input_boolean` toggle switch for 10 seconds.
 
+Since I currently have five cameras, I've set up five alarms, where each alarm is for detection of a person.
+
 ### Reasons to use `input_boolean` switches:
 - **Flexibility**: By using an `input_boolean`, you can decouple the webhook from the actual action, allowing multiple automations to be triggered based on the same event.
 - **State history**: Home Assistant stores the history of the `input_boolean` in a form that's easier to view than an automation's history.
